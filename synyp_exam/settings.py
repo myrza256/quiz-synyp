@@ -26,7 +26,7 @@ SECRET_KEY = '9_yfhg_lenzbl3r=wr$a(8-l4p-qpbq@5n3n9pw=#)-e@7z0n%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "quiz.insynyp.online", "insynyp.online"]
+ALLOWED_HOSTS = ["127.0.0.1", "test.insynyp.online", "insynyp.online"]
 
 
 # Application definition
