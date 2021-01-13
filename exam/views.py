@@ -84,7 +84,7 @@ def exam(request, exam_id):
 @renderer_classes([TemplateHTMLRenderer])
 def new_exam(request):
     if not len(Session.objects.filter(ip=str(get_client_ip(request)))):
-        return HttpResponseRedirect("http://127.0.0.1:8000/authentication")
+        return HttpResponseRedirect("https://test.insynyp.online/authentication")
     if request.method == "GET":
         return Response(template_name="new_exam.html")
     user = Session.objects.get(ip=str(get_client_ip(request))).user
@@ -94,7 +94,7 @@ def new_exam(request):
         exam_bd = new_exam_back(first_additional, second_additional, request.user, category=request.GET["category"])
     else:
         exam_bd = new_exam_back(first_additional, second_additional, request.user)
-    return HttpResponseRedirect(f"http://127.0.0.1:8000/{exam_bd.id}/")
+    return HttpResponseRedirect(f"https://test.insynyp.online/{exam_bd.id}/")
 
 
 def results(request, exam_id):
@@ -102,7 +102,7 @@ def results(request, exam_id):
     # if exam_.user_id != request.user.id:
     #     return HttpResponseRedirect('https://insynyp.online')
     if total_seconds(exam_.end_time) + 6 * 3600 > total_seconds(datetime.datetime.now()):
-        return HttpResponseRedirect(f"http://127.0.0.1:8000/{exam_id}/")
+        return HttpResponseRedirect(f"https://test.insynyp.online/{exam_id}/")
     data = get_right(exam_id)
     exam_data = {"variants": data[2], "total": data[1], "points": data[0], "exam_id": exam_id}
     return render(request, "results.html", exam_data)
@@ -111,7 +111,7 @@ def results(request, exam_id):
 def apply_results(request):
     for exam_ in Exam.objects.all():
         ExamResult(exam=exam_, user=exam_.user, result=exam_.get_results()[0]).save()
-    return HttpResponseRedirect("http://127.0.0.1:8000/admin/exam/examresult/")
+    return HttpResponseRedirect("https://test.insynyp.online/admin/exam/examresult/")
 
 
 def detail_results(request, exam_id):
@@ -119,7 +119,7 @@ def detail_results(request, exam_id):
     # if exam_.user_id != request.user.id:
     #     return HttpResponseRedirect('https://insynyp.online')
     if total_seconds(exam_.end_time) + 6 * 3600 > total_seconds(datetime.datetime.now()):
-        return HttpResponseRedirect(f"http://127.0.0.1:8000/{exam_id}/")
+        return HttpResponseRedirect(f"https://test.insynyp.online/{exam_id}/")
     return render(request, "detail_results.html", {"exam": get_exam(exam_id)})
 
 
@@ -129,7 +129,7 @@ def admin_user_results(request, username):
 
 def registration(request):
     if Session.objects.filter(ip=str(get_client_ip(request))):
-        return HttpResponseRedirect("http://127.0.0.1:8000/new")
+        return HttpResponseRedirect("https://test.insynyp.online/new")
     if request.method == "GET":
         return render(request, "registration.html")
     else:
@@ -151,7 +151,7 @@ def registration(request):
         user.save()
         ip = get_client_ip(request)
         Session(ip=ip, user=user).save()
-        return HttpResponseRedirect("http://127.0.0.1:8000/categories")
+        return HttpResponseRedirect("https://test.insynyp.online/categories")
 
 
 def password_recovery(request):
@@ -161,7 +161,7 @@ def password_recovery(request):
                 recovery = PasswordRecovery.objects.get(token=request.GET["token"])
                 user = User.objects.get(email=recovery.email)
             except PasswordRecovery.DoesNotExist:
-                return HttpResponseRedirect("http://127.0.0.1:8000/authorization")
+                return HttpResponseRedirect("https://test.insynyp.online/authorization")
             return render(request, "passwordReset.html")
         else:
             return render(request, "passwordResetRequest.html")
@@ -171,7 +171,7 @@ def password_recovery(request):
                 recovery = PasswordRecovery.objects.get(token=request.GET["token"])
                 user = User.objects.get(email=recovery.email)
             except PasswordRecovery.DoesNotExist:
-                return HttpResponseRedirect("http://127.0.0.1:8000/authorization")
+                return HttpResponseRedirect("https://test.insynyp.online/authorization")
             password = request.POST["password"]
             password2 = request.POST["password2"]
             if password != password2:
@@ -196,8 +196,8 @@ def password_recovery(request):
                       "<div style='text-align: center'>"
                       "<h5>для восстановления пароля перейдите по ссылке"
                       " или скопируйте текст ниже в адресную строку</h5>"
-                      f"<a href='http://127.0.0.1:8000/passwordrecovery?token={token}'>Восстановить пароль</a><br>"
-                      f"http://127.0.0.1:8000/passwordrecovery?token={token}</div>")
+                      f"<a href='https://test.insynyp.online/passwordrecovery?token={token}'>Восстановить пароль</a><br>"
+                      f"https://test.insynyp.online/passwordrecovery?token={token}</div>")
             return render(request, "message.html", {"message": "Для восстановления пароля следуйте инструкциям "
                                                                "из письма, которое мы вам отправили"})
 
@@ -256,7 +256,7 @@ def get_theme(request):
 
 def authentication(request):
     if Session.objects.filter(ip=str(get_client_ip(request))):
-        return HttpResponseRedirect("http://127.0.0.1:8000/new")
+        return HttpResponseRedirect("https://test.insynyp.online/new")
     if request.method == "GET":
         return render(request, "authentication.html")
     else:
@@ -268,14 +268,14 @@ def authentication(request):
             return render(request, "authentication.html", {"alert": "Неправильная почта или пароль"})
         ip = get_client_ip(request)
         Session(ip=ip, user=user).save()
-        return HttpResponseRedirect("http://127.0.0.1:8000/categories")
+        return HttpResponseRedirect("https://test.insynyp.online/categories")
 
 
 def logout(request):
     try:
         Session.objects.get(ip=get_client_ip(request)).delete()
     finally:
-        return HttpResponseRedirect("http://127.0.0.1:8000/authentication")
+        return HttpResponseRedirect("https://test.insynyp.online/authentication")
 
 
 @csrf_exempt
