@@ -1,0 +1,140 @@
+.category{
+    max-height: 100%;
+    max-width: 170px;
+    margin: 20px;
+    display: inline-block;
+    vertical-align: top;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    cursor: pointer;
+    color: black;
+    font-size: 14pt;
+    transition: 0.5s ease;
+}
+#vue-container{
+    overflow-x: hidden;
+}
+.categories{
+    font-size: 0;
+    transition: 0.5s ease;
+    height: 30%;
+    width: fit-content;
+    white-space: nowrap;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+::-webkit-scrollbar-thumb{
+    background-color: green;
+}
+.category:hover{
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    text-decoration: none;
+    color: black;
+}
+.category-img{
+    display: block;
+    width: 100%;
+}
+.category-title{
+    padding: 10px;
+    text-align: center;
+    font-size: 11pt;
+}
+.question-title{
+    font-size: 16pt;
+}
+form{
+    width: 80%;
+    text-align: center;
+    margin: 20px auto;
+}
+.theme-question{
+    border-radius: 20px;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    margin: 20px;
+}
+.theme-answer{
+    font-size: 14pt;
+}
+.theme-answer input{
+	margin: 30px;
+}
+.theme-answer input{
+	margin: 30px;
+}
+.question-answers{
+    width: 90%;
+    text-align: left;
+    margin: 10px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.form_radio_btn input[type=radio] {
+	display: none;
+}
+.form_radio_btn label {
+	cursor: pointer;
+    width: 90%;
+    margin: 10px 5%;
+	padding: 0 15px;
+	border: 1px solid #999;
+	border-radius: 6px;
+	user-select: none;
+    transition: 0.4s;
+}
+
+/* Checked */
+.form_radio_btn input[type=radio]:checked + label {
+	border: 2px solid steelblue;
+}
+
+/* Hover */
+.form_radio_btn label:hover {
+    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Disabled */
+.form_radio_btn input[type=radio]:disabled + label {
+	background: #efefef;
+	color: #666;
+}
+
+.wrong{
+    border: 2px solid indianred;
+}
+
+.right{
+    border: 2px solid lightgreen;
+}
+form .label{
+    width: fit-content;
+    margin: 10px auto;
+}
+form .label:hover{
+    padding: 10px 20px;
+    width: fit-content;
+    margin: 10px auto;
+}
+.scroll-nav{
+    display: inline-flex;
+    flex-direction: row;
+    margin: 20px;
+}
+.scroll-btn i{
+    margin: 20px 20px 20px 20px;
+     border-radius: 5px;
+    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    height: 30px;
+    width: 30px;
+}
+@media screen and (max-width: 760px) {
+    form{
+        width: 100%;
+    }
+    .question-answers{
+        grid-template-columns: 1fr;
+    }
+}

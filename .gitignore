@@ -1,0 +1,9 @@
+*.log
+*.pot
+*.pyc
+__pycache__/
+.vscode
+node_modules
+.idea
+./venv
+/venv

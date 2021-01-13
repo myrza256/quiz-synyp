@@ -1,0 +1,93 @@
+{% load static %}
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <title>Жаңа Емтихан</title>
+    <link rel="stylesheet" href={% static "css/style.css" %}>
+</head>
+<body>
+    {% include "navigation.html" %}
+    {% verbatim %}
+    <div id="vue-container">
+        <div style="margin: 10px; text-align: center">
+                <div id="header-desktop">
+                    <h3 id="permanent">Міндетті пәндер: </h3>
+                    <div v-for="obligatory in obligatorys" class="label label-highlight" style="display: inline-block">{{ obligatory["name"] }}</div>
+                </div>
+                <div style="text-align: center" id="header-mobile">
+                    <h2>Synyp Online</h2>
+                    <h3>ҰБТ толық ТЕСТ</h3>
+                    <div class="label label-highlight" style="border-radius: 2px;">Міндетті пәндер</div>
+                    <div v-for="obligatory in obligatorys" class="label" style="display: inline-block;">{{ obligatory["name"] }}</div>
+                    <div class="label label-highlight" style="border-radius: 2px;">Таңдау пәндері</div>
+                </div>
+            </div>
+        <div id="exam-form">
+            <div class="form-col" id="first-additional" style="border-right: solid 1px;">
+                <div class="label label-highlight">1- ші  таңдау пәні</div>
+                    <div class="label label-btn" v-if="firstAdditional !== false"
+                         @click="unset_additionals()">
+                        <div v-for="subject in lessons" v-if="subject.id == firstAdditional">
+                            {{ subject.name }} <i class="fa fa-times-circle"></i>
+                        </div>
+                    </div>
+                <div v-else v-for="lesson in lessons" class="label label-btn"
+                     @click="set_first_additional(lesson.id)">
+                        {{ lesson["name"] }}
+                </div>
+            </div>
+            <div class="form-col" id="second-additional">
+                <div class="label label-highlight">2- ші  таңдау пәні</div>
+                <div class="label" v-if="firstAdditional == false">
+                    1-ші таңдау пәнін таңдаған соң ашылады
+                </div>
+                <div class="label label-btn" v-else-if="secondAdditional !== false"
+                     @click="unset_second_additional()">
+                    <div v-for="subject in lessons" v-if="subject.id == secondAdditional">
+                            {{ subject.name }} <i class="fa fa-times-circle"></i>
+                        </div>
+                </div>
+                <div v-else v-for="lesson in secondLessons[firstAdditional]">
+                    <div  class="label label-btn"
+                          @click="set_second_additional(subject.id)"
+                          v-for="subject in lessons"
+                          v-if="subject.id == lesson">
+                        {{ subject.name }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-col" id="submit-desktop">
+                <div v-if="secondAdditional !== false" class="label label-highlight">Емтихан тапсыруға сізде 3.5 сағат болады</div><br>
+                {% endverbatim %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="submit" v-if="secondAdditional !== false" class="label label-highlight" id="submit" value="Емтиханды бастау">
+                </form>
+                {% verbatim %}
+            </div>
+            <div style="text-align: center; border-top: 1px solid" id="submit-mobile">
+                <h5 v-if="secondAdditional !== false">Емтихан тапсыруға сізде 3.5 сағат болады</h5>
+                {% endverbatim %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="submit" v-if="secondAdditional !== false" class="label label-highlight" id="submit" value="Емтиханды бастау">
+                </form>
+                {% verbatim %}
+            </div>
+        </div>
+    </div>
+</body>
+{% endverbatim %}
+<script type="text/javascript" src={% static "js/new_exam.js" %}></script>
+</html>

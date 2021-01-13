@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Результаты экзаменов ученика</title>
+</head>
+<style>
+    .exam{
+        border-radius: 10px;
+        width: 100%;
+        text-align: center;
+        margin: 20px 0 20px 0;
+        box-shadow: 0 5px 15px rgba(0,0,0,.08);
+    }
+    .exam-header{
+        border-bottom: solid 1px;
+        font-size: 20pt;
+    }
+    .exam-row{
+        font-size: 15pt;
+    }
+    @media screen and (max-width: 700px){
+        .half-row{
+            width: 49%;
+            display: inline-block;
+            vertical-align: top;
+        }
+    }
+</style>
+<body>
+    <div id="container" style="width: 90%; margin: 10px auto;">
+
+    </div>
+<script>
+    async function post(url, data){
+        let dataReceived;
+        let response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "plain/text" },
+                body: data
+            });
+        dataReceived = await response;
+        return dataReceived.json();
+    }
+    post("https://insynyp.online/exam/api/",  `{"action": "get_user_results", "user_id": ${window.location.href.split("/")[window.location.href.split("/").length - 2]}}`).then(
+        res =>{
+            console.log(res);
+            for (let exam in res){
+                exam = res[exam];
+                document.getElementById("container").innerHTML +=
+                    `<div class="exam">
+                        <div class="exam-header">${exam.end_time}<br>${exam.first_additional}  ${exam.second_additional}  ${exam.results[0]}/${exam.results[1]}</div>
+                        <div class="exam-body">
+                                 <div class="exam-row">${exam.results[2][0].name}: ${exam.results[2][0].points}/${exam.results[2][0].total}</div>
+                                 <div class="exam-row">${exam.results[2][1].name}: ${exam.results[2][1].points}/${exam.results[2][1].total}</div>
+                                 <div class="exam-row">${exam.results[2][2].name}: ${exam.results[2][2].points}/${exam.results[2][2].total}</div>
+                                 <div class="exam-row"><div class="half-row">${exam.results[2][3].name}: ${exam.results[2][3].points}/${exam.results[2][3].total}</div>
+                                 <div class="half-row">${exam.results[2][4].name}: ${exam.results[2][4].points}/${exam.results[2][4].total}</div></div>
+                        </div>
+                    </div>`
+            }
+        }
+    )
+
+</script>
+</body>
+</html>

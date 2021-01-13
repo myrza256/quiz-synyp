@@ -1,0 +1,33 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	<title>Емтихан нәтижелері</title>
+	<link rel="stylesheet" href={% static "css/style.css" %}>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+</head>
+<body style="margin: 0;">
+    {% include "navigation.html" %}
+	<div id="vue-container">
+        <div style="text-align: center" id="header-mobile">
+            <a href="https://insynyp.online">
+                <img style="width: 20%;" img src="https://insynyp.online/static/img/logo.9ff6e034.png">
+            </a>
+        </div>
+        <h1 align="center">Емтихан нәтижелері!</h1>
+        <h2 align="center">140-тан {{ points }} ұпай жинады</h2>
+        <div style="width: fit-content; margin: 10px auto 10px;">
+            <a href="http://127.0.0.1:8000/detail_results/{{ exam_id }}/" class="label label-highlight link" style="width: 300px">Тексеру</a>
+            <a href="http://127.0.0.1:8000" class="label label-highlight link" style="width: 300px">Аяқтау</a>
+        </div>
+        {% for variant in variants %}
+            <h3 align="center">{{ variant.name }}  {{ variant.total }}/{{ variant.points }}</h3>
+        {% endfor %}
+    </div>
+</body>
+</html>
