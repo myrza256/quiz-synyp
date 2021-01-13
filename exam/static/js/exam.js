@@ -36,7 +36,7 @@ let exam = new Vue({
     },
     methods: {
         save: function () {
-            post("http://127.0.0.1:8000/api/", JSON.stringify({
+            post("https://test.insynyp.online/api/", JSON.stringify({
                 "action": "upload_answers",
                 "answers": this.selectedAnswers,
                 "exam_id": exam_data.examId,
@@ -44,7 +44,7 @@ let exam = new Vue({
             }))
                 .then(
                     res=>{
-                        window.location.replace(`http://127.0.0.1:8000/results/${exam_data.examId}/`);
+                        window.location.replace(`https://test.insynyp.online/results/${exam_data.examId}/`);
                     }
                 )
         },
@@ -68,7 +68,7 @@ let exam = new Vue({
         for (let subject in this.subjects){
             this.selectedAnswers[this.subjects[subject].id] = false;
         }
-        post("http://127.0.0.1:8000/api/",
+        post("https://test.insynyp.online/api/",
             `{"action": "get_questions", "exam_id": ${exam_data.examId}}`)
             .then( res => {
                 console.log(res);
@@ -88,7 +88,7 @@ let exam = new Vue({
                 exam.minutes = "0" + exam.minutes;
             }
 	    } else {
-	        window.location.replace(`http://127.0.0.1:8000/results/${exam_data.examId}/`);
+	        window.location.replace(`https://test.insynyp.online/results/${exam_data.examId}/`);
         }
 	}, 1000);
         // this.$nextTick().then(
