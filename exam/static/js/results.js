@@ -48,11 +48,11 @@ let exam = new Vue({
         for (let subject in this.subjects){
             this.selectedAnswers[this.subjects[subject].id] = false;
         }
-        post("http://127.0.0.1:8000/api/",
+        post("https://test.insynyp.online/api/",
             `{"action": "get_questions", "exam_id": ${exam_data.examId}}`)
             .then( res => {
                 this.questions = res;
-                post("http://127.0.0.1:8000/api/",
+                post("https://test.insynyp.online/api/",
             `{"action": "get_selected", "exam_id": ${exam_data.examId}}`)
                     .then(
                         res => {
