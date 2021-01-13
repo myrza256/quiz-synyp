@@ -57,7 +57,7 @@ let form = new Vue({
         },
     },
     created: function () {
-        post("http://127.0.0.1:8000/api/", `{"action": "get_subjects"}`)
+        post("https://test.insynyp.online/api/", `{"action": "get_subjects"}`)
             .then( res => {
                     this.obligatorys = res.subjects.slice(0, 3);
                     this.lessons = res.subjects.slice(3);
